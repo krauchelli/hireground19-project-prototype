@@ -1,0 +1,99 @@
+########################
+# Unity / Project Files
+########################
+
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+
+# Cache & temporary
+/[Aa]ssets/Plugins/Editor/JetBrains*/*/dotCover.settings
+/[Aa]ssets/StreamingAssets/aa/*
+
+# Asset Store tools (optional)
+[Aa]ssets/AssetStoreTools*
+
+# Crash reports
+sysinfo.txt
+
+########################
+# IDE / Editor files
+########################
+
+# Visual Studio / VSCode / Rider
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# JetBrains Rider
+*.sln.iml
+
+########################
+# OS-specific
+########################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+########################
+# Build Artifacts
+########################
+
+# Unity build outputs
+*.apk
+*.aab
+*.unitypackage
+[Bb]uilds/**
+
+########################
+# Logs / Profiles
+########################
+
+*.log
+*.orig
+*.swp
+*.swo
+
+########################
+# TextMesh Pro (optional cache)
+########################
+
+[Aa]ssets/TextMesh Pro/Resources/*.asset
+
+########################
+# Other misc
+########################
+
+# Collaborator-specific / local config
+*.local
+*.vsconfig
