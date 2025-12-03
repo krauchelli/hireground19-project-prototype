@@ -42,6 +42,7 @@ namespace HireGround.Network
             string url = $"{baseUrl}/create-session";
             Debug.Log($"[ApiClient] Creating session at {url}...");
 
+            // using GET request to create session
             using (UnityWebRequest request = new UnityWebRequest(url, "GET"))
             {
                 request.downloadHandler = new DownloadHandlerBuffer();
