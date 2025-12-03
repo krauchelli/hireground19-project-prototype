@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using HireGround.Managers;
 
 namespace HireGround.Core
 {
@@ -38,8 +39,16 @@ namespace HireGround.Core
                         currentInteractable = hitInteractable;
                         currentInteractable.OnGazeEnter();
                     }
-                        
-                    if (!isInteracting)
+
+                    // tambahan logika dialog sedang aktif
+                    bool isConversationActive = false; // default value
+                    if (DialogueManager.Instance != null)
+                    {
+                        isConversationActive = DialogueManager.Instance.IsConversationActive;
+                    }
+
+                    // jalankan timer loading jika belum ada interaksi dan tidak sedang dialog / conversation active
+                    if (!isInteracting && !isConversationActive)
                     {
                         timer += Time.deltaTime;
                         UpdateReticleUI(timer / dwellTime);
@@ -50,6 +59,12 @@ namespace HireGround.Core
                             currentInteractable.OnGazeTrigger();
                             ResetReticle();
                         }
+                    }
+                    else
+                    {
+                        // jika sedang berdialog, ensure rectitcle reset atau hilang
+                        UpdateReticleUI(0f);
+                        timer = 0f;
                     }
                 }
             }

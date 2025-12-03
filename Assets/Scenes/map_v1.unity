@@ -963,7 +963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4733971c0c93b7e4ebde4f5f5510d88d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcID: booth_tech_01
+  npcID: booth_1
   npcName: Recruiter Google
   highlightMesh: {fileID: 0}
   talkPromptUI: {fileID: 786360674}
@@ -12788,8 +12788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197dbd528ca9ad14dacbbff4fe4874f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverIp: 192.168.1.5
-  port: 5000
+  serverIp: fajarramadhan-hireground19-llm-service.hf.space
   useMockServer: 0
 --- !u!114 &2018115544
 MonoBehaviour:
