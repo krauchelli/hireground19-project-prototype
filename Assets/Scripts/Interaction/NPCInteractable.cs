@@ -1,11 +1,11 @@
 using UnityEngine;
-using HireGround.Managers;
+using HireGround.Managers; 
 
 namespace HireGround.Core
 {
     public interface IInteractable
     {
-        void OnGazeEnter(); 
+        void OnGazeEnter();   
         void OnGazeExit();    
         void OnGazeTrigger(); 
     }
@@ -22,32 +22,40 @@ namespace HireGround.Core
 
         public void OnGazeEnter()
         {
-            Debug.Log($"[Gaze] Melihat NPC: {npcName}");
             if (highlightMesh) highlightMesh.SetActive(true);
-            if (talkPromptUI) talkPromptUI.SetActive(true);
+            
+            if (DialogueManager.Instance != null && !DialogueManager.Instance.IsConversationActive)
+            {
+                if (talkPromptUI) talkPromptUI.SetActive(true);
+            }
         }
 
         public void OnGazeExit()
         {
-            Debug.Log($"[Gaze] Berhenti melihat NPC: {npcName}");
             if (highlightMesh) highlightMesh.SetActive(false);
             if (talkPromptUI) talkPromptUI.SetActive(false);
+
+            if (DialogueManager.Instance != null)
+            {
+                DialogueManager.Instance.EndConversation();
+            }
         }
 
         public void OnGazeTrigger()
         {
-            Debug.Log($"[Gaze] TRIGGER -> Mulai Percakapan dengan {npcName}...");
-            
             if (DialogueManager.Instance != null)
             {
-                DialogueManager.Instance.StartConversation(this);
+                if (!DialogueManager.Instance.IsConversationActive)
+                {
+                    Debug.Log($"[Gaze] Start Chat with {npcName}");
+                    DialogueManager.Instance.StartConversation(this);
+                    
+                    if (talkPromptUI) talkPromptUI.SetActive(false);
+                }
+                else
+                {
+                }
             }
-            else
-            {
-                Debug.LogError("[NPCInteractable] DialogueManager tidak ditemukan di Scene! Pastikan GameObject 'Managers' sudah ada.");
-            }
-            
-            if (talkPromptUI) talkPromptUI.SetActive(false);
         }
     }
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using HireGround.Core;
 using HireGround.Network;
 using TMPro;
@@ -9,9 +8,9 @@ namespace HireGround.Managers
     public enum ConversationState
     {
         Idle,
-        Listening, 
-        Processing, 
-        Responding  
+        Listening,
+        Processing,
+        Responding
     }
 
     public class DialogueManager : MonoBehaviour
@@ -29,6 +28,8 @@ namespace HireGround.Managers
 
         private NPCInteractable currentNPC;
 
+        public bool IsConversationActive => dialogueCanvas.activeSelf && currentState != ConversationState.Idle;
+
         void Awake()
         {
             if (Instance == null) Instance = this;
@@ -37,6 +38,8 @@ namespace HireGround.Managers
 
         public void StartConversation(NPCInteractable npc)
         {
+            if (IsConversationActive) return;
+
             currentNPC = npc;
             dialogueCanvas.SetActive(true);
             
@@ -48,6 +51,8 @@ namespace HireGround.Managers
 
         void EnterListeningState()
         {
+            if (currentState == ConversationState.Listening) return;
+
             currentState = ConversationState.Listening;
             statusText.text = "Mendengarkan...";
             statusText.color = Color.red;
@@ -81,15 +86,21 @@ namespace HireGround.Managers
         void OnBackendError(string error)
         {
             statusText.text = "Error Connection";
-            dialogueText.text = "Maaf, saya tidak bisa terhubung ke server.";
+            dialogueText.text = error;
             currentState = ConversationState.Idle;
         }
 
         public void OnTTSFinished()
         {
             currentState = ConversationState.Idle;
-            statusText.text = "Selesai. Tatap lagi untuk bicara.";
-            
+            statusText.text = "Selesai. Tatap lagi untuk lanjut.";
+            statusText.color = Color.white;
+        }
+
+        public void EndConversation()
+        {            
+            currentState = ConversationState.Idle;
+            if (dialogueCanvas) dialogueCanvas.SetActive(false);
         }
     }
 }
