@@ -11,7 +11,7 @@ namespace HireGround.Network
         public static ApiClient Instance;
 
         [Header("Server Configuration")]
-        public string serverIp = "192.168.1.5"; 
+        public string serverIp = "fajarramadhan-hireground19-llm-service.hf.space"; 
         // public string port = "5000";
         
         private string baseUrl;
@@ -25,8 +25,8 @@ namespace HireGround.Network
             if (Instance == null) Instance = this;
             // Susun URL
             // baseUrl = $"http://{serverIp}:{port}/api";
-            Debug.Log($"attempting to set baseUrl with serverIp: {serverIp}");
             baseUrl = $"https://{serverIp}/api";
+            Debug.Log($"attempting to set baseUrl with baseurl: {baseUrl}");
         }
 
         void Start()
@@ -96,13 +96,16 @@ namespace HireGround.Network
         IEnumerator PostChatRequest(string npcId, string userText, System.Action<string> onSuccess, System.Action<string> onError)
         {
             string url = $"{baseUrl}/llm-query";
-
+            // debug test
+            Debug.Log($"[ApiClient] Sending chat request to {url} with session ID: {currentSessionId}");
             ChatRequest requestData = new ChatRequest
             {
                 session_id = currentSessionId,
                 npc_id = npcId,
                 user_text = userText
             };
+
+            Debug.Log($"[ApiClient] Request Data: {JsonUtility.ToJson(requestData)}");
 
             string jsonBody = JsonUtility.ToJson(requestData);
             byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
