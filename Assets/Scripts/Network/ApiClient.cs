@@ -25,7 +25,8 @@ namespace HireGround.Network
             if (Instance == null) Instance = this;
             // Susun URL
             // baseUrl = $"http://{serverIp}:{port}/api";
-            baseUrl = $"http://{serverIp}/api";
+            Debug.Log($"attempting to set baseUrl with serverIp: {serverIp}");
+            baseUrl = $"https://{serverIp}/api";
         }
 
         void Start()
@@ -41,7 +42,7 @@ namespace HireGround.Network
             string url = $"{baseUrl}/create-session";
             Debug.Log($"[ApiClient] Creating session at {url}...");
 
-            using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+            using (UnityWebRequest request = new UnityWebRequest(url, "GET"))
             {
                 request.downloadHandler = new DownloadHandlerBuffer();
                 yield return request.SendWebRequest();
