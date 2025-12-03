@@ -963,7 +963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4733971c0c93b7e4ebde4f5f5510d88d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcID: booth_tech_01
+  npcID: booth_1
   npcName: Recruiter Google
   highlightMesh: {fileID: 0}
   talkPromptUI: {fileID: 786360674}
