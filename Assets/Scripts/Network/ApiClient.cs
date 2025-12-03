@@ -12,7 +12,7 @@ namespace HireGround.Network
 
         [Header("Server Configuration")]
         public string serverIp = "192.168.1.5"; 
-        public string port = "5000";
+        // public string port = "5000";
         
         private string baseUrl;
         private string currentSessionId = ""; 
@@ -24,7 +24,8 @@ namespace HireGround.Network
         {
             if (Instance == null) Instance = this;
             // Susun URL
-            baseUrl = $"http://{serverIp}:{port}/api";
+            // baseUrl = $"http://{serverIp}:{port}/api";
+            baseUrl = $"http://{serverIp}/api";
         }
 
         void Start()

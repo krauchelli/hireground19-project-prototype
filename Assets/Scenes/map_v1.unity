@@ -12788,7 +12788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197dbd528ca9ad14dacbbff4fe4874f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverIp: 192.168.1.5
+  serverIp: https://fajarramadhan-hireground19-llm-service.hf.space/
   port: 5000
   useMockServer: 0
 --- !u!114 &2018115544
