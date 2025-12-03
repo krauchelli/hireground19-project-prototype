@@ -1,22 +1,15 @@
 using UnityEngine;
+using HireGround.Managers;
 
 namespace HireGround.Core
 {
-    // =========================================================================
-    // 1. INTERFACE (Kontrak Interaksi)
-    // Ditaruh di atas sini supaya satu file saja
-    // =========================================================================
     public interface IInteractable
     {
-        void OnGazeEnter();   // Saat reticle masuk
-        void OnGazeExit();    // Saat reticle keluar
-        void OnGazeTrigger(); // Saat dwell timer selesai (terpilih)
+        void OnGazeEnter(); 
+        void OnGazeExit();    
+        void OnGazeTrigger(); 
     }
 
-    // =========================================================================
-    // 2. NPC CLASS (Implementasi di Object)
-    // Pasang script ini di GameObject NPC
-    // =========================================================================
     public class NPCInteractable : MonoBehaviour, IInteractable
     {
         [Header("NPC Profile")]
@@ -24,10 +17,9 @@ namespace HireGround.Core
         public string npcName = "Recruiter Google";
         
         [Header("Visual Feedback")]
-        public GameObject highlightMesh; // Opsional: Outline/Mesh renderer
-        public GameObject talkPromptUI;  // Canvas Worldspace: "Tatap untuk bicara"
+        public GameObject highlightMesh; 
+        public GameObject talkPromptUI; 
 
-        // Dipanggil saat mata mulai melihat NPC
         public void OnGazeEnter()
         {
             Debug.Log($"[Gaze] Melihat NPC: {npcName}");
@@ -35,7 +27,6 @@ namespace HireGround.Core
             if (talkPromptUI) talkPromptUI.SetActive(true);
         }
 
-        // Dipanggil saat mata berpaling dari NPC
         public void OnGazeExit()
         {
             Debug.Log($"[Gaze] Berhenti melihat NPC: {npcName}");
@@ -43,15 +34,19 @@ namespace HireGround.Core
             if (talkPromptUI) talkPromptUI.SetActive(false);
         }
 
-        // Dipanggil saat loading lingkaran reticle penuh (Dwell time selesai)
         public void OnGazeTrigger()
         {
             Debug.Log($"[Gaze] TRIGGER -> Mulai Percakapan dengan {npcName}...");
             
-            // Nanti di sini kita sambungkan ke DialogueManager
-            // Contoh: DialogueManager.Instance.StartConversation(this);
+            if (DialogueManager.Instance != null)
+            {
+                DialogueManager.Instance.StartConversation(this);
+            }
+            else
+            {
+                Debug.LogError("[NPCInteractable] DialogueManager tidak ditemukan di Scene! Pastikan GameObject 'Managers' sudah ada.");
+            }
             
-            // Matikan prompt UI agar tidak menghalangi wajah NPC saat bicara
             if (talkPromptUI) talkPromptUI.SetActive(false);
         }
     }

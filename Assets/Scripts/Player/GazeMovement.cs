@@ -16,7 +16,7 @@ namespace HireGround.Core
         public float lookDownAngleMax = 85.0f;
 
         [Header("References")]
-        public Transform vrCamera; // Masukkan Main Camera di sini
+        public Transform vrCamera;
 
         private CharacterController characterController;
         private bool isMoving = false;
@@ -24,7 +24,6 @@ namespace HireGround.Core
         void Start()
         {
             characterController = GetComponent<CharacterController>();
-            // Otomatis cari kamera jika belum diassign di inspector
             if (vrCamera == null) vrCamera = Camera.main.transform;
         }
 
@@ -37,21 +36,16 @@ namespace HireGround.Core
         {
             if (vrCamera == null) return;
 
-            // Ambil rotasi X kamera
             float cameraX = vrCamera.eulerAngles.x;
 
-            // Logika sederhana: jika x antara 25 dan 85 derajat (menunduk)
             isMoving = (cameraX >= lookDownAngleThreshold && cameraX < lookDownAngleMax);
 
             if (isMoving)
             {
-                // Ambil arah depan kamera
                 Vector3 forward = vrCamera.forward;
                 
-                // Matikan komponen Y supaya player tidak 'terbang' ke bawah tanah
                 forward.y = 0; 
                 
-                // Gerakkan CharacterController
                 characterController.SimpleMove(forward.normalized * moveSpeed);
             }
         }

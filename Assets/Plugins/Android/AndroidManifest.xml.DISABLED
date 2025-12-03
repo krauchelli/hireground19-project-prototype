@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- 1. Izin Suara (WAJIB untuk Speech-to-Text/VoiceController) -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- 2. Izin Kamera (Untuk fitur VR/AR/Cardboard) -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    
+    <!-- 3. Izin Internet & Penyimpanan (Untuk download bahasa offline / cache) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Izin penyimpanan lama (Opsional untuk Android 13+, tapi bagus untuk kompatibilitas) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    <!-- ========================================================= -->
+    <!-- FEATURES (SYARAT HARDWARE)                                -->
+    <!-- ========================================================= -->
+    
+    <!-- Memastikan HP punya Microphone -->
+    <uses-feature android:name="android.hardware.microphone" android:required="true" />
+    
+    <!-- Memastikan HP punya Kamera (Required=false agar HP tanpa kamera tetap bisa install jika mau) -->
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    
+    <!-- OpenGL ES 3.0 (Untuk Render VR) -->
+    <uses-feature android:glEsVersion="0x00030000" android:required="true" />
+
+    <!-- ========================================================= -->
+    <!-- QUERIES (WAJIB UNTUK ANDROID 11/API 30+)                  -->
+    <!-- Agar aplikasi bisa "melihat" service Google Speech & TTS   -->
+    <!-- ========================================================= -->
+    <queries>
+        <!-- Untuk Speech Recognizer (STT) -->
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+        
+        <!-- Untuk Text To Speech (TTS) -->
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+
+        <!-- Untuk Kamera -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+    <application>
+        <!--Used when Application Entry is set to Activity, otherwise remove this activity block-->
+        <activity android:name="com.unity3d.player.UnityPlayerActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
+        </activity>
+        <!--Used when Application Entry is set to GameActivity, otherwise remove this activity block-->
+        <activity android:name="com.unity3d.player.UnityPlayerGameActivity"
+                  android:theme="@style/BaseUnityGameActivityTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
+            <meta-data android:name="android.app.lib_name" android:value="game" />
+        </activity>
+    </application>
+</manifest>
