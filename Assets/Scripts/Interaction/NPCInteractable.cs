@@ -35,10 +35,11 @@ namespace HireGround.Core
             if (highlightMesh) highlightMesh.SetActive(false);
             if (talkPromptUI) talkPromptUI.SetActive(false);
 
-            if (DialogueManager.Instance != null)
-            {
-                DialogueManager.Instance.EndConversation();
-            }
+            // temporarly disabled untuk fitur mengatasi keep conversation saat keluar area npc
+            // if (DialogueManager.Instance != null)
+            // {
+            //     DialogueManager.Instance.EndConversation();
+            // }
         }
 
         public void OnGazeTrigger()
