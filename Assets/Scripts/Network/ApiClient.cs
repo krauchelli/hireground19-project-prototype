@@ -104,7 +104,7 @@ namespace HireGround.Network
                 npc_id = npcId,
                 user_text = userText
             };
-
+            // debug test untuk lihat data request
             Debug.Log($"[ApiClient] Request Data: {JsonUtility.ToJson(requestData)}");
 
             string jsonBody = JsonUtility.ToJson(requestData);

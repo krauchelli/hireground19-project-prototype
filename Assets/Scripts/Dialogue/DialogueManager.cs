@@ -23,6 +23,10 @@ namespace HireGround.Managers
         public TextMeshProUGUI npcNameText; 
         public TextMeshProUGUI dialogueText; 
 
+        // tambahan header untuk jarak interaksi
+        public float exitDistance = 3.5f; // max distance to keep conversation
+        private Transform playerTransform; // reference to player position
+
         [Header("State")]
         public ConversationState currentState = ConversationState.Idle;
 
@@ -34,12 +38,35 @@ namespace HireGround.Managers
         {
             if (Instance == null) Instance = this;
             if (dialogueCanvas) dialogueCanvas.SetActive(false);
+
+            // ambil referensi player transform
+            if (Camera.main != null) playerTransform = Camera.main.transform; // assuming main camera is the player
+        }
+
+        void Update()
+        {
+            // cek jarak
+            if (IsConversationActive && currentNPC != null && playerTransform != null)
+            {
+                float distance = Vector3.Distance(playerTransform.position, currentNPC.transform.position);
+
+                // akhiri percakapan
+                if (distance > exitDistance)
+                {
+                    EndConversation();
+                }
+            }
         }
 
         public void StartConversation(NPCInteractable npc)
         {
-            if (IsConversationActive) return;
+            // if (IsConversationActive) return;
+            if (IsConversationActive && currentNPC == npc) return; // prevent restarting same conversation, pengganti di atas
 
+            // handler kalau sudah ada percakapan aktif dengan NPC lain
+            // tutup percakapan sebelumnya
+            if (IsConversationActive && currentNPC != npc) EndConversation();
+            
             currentNPC = npc;
             dialogueCanvas.SetActive(true);
             
@@ -100,6 +127,7 @@ namespace HireGround.Managers
         public void EndConversation()
         {            
             currentState = ConversationState.Idle;
+            currentNPC = null; // clear current NPC
             if (dialogueCanvas) dialogueCanvas.SetActive(false);
         }
     }
